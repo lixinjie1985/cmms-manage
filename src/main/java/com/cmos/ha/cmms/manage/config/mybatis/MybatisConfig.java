@@ -1,4 +1,4 @@
-package com.cmos.ha.cmms.manage.config;
+package com.cmos.ha.cmms.manage.config.mybatis;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -16,7 +16,7 @@ import com.alibaba.druid.pool.DruidDataSource;
  * @since 2017-12-15
  */
 @Configuration
-@MapperScan(basePackages = "org.eop.spring.mvc.mybatis.annotation.mapper", sqlSessionFactoryRef = "sqlSessionFactory")
+@MapperScan(basePackages = {"com.cmos.ha.cmms.manage.example.mapper"}, sqlSessionFactoryRef = "sqlSessionFactory")
 public class MybatisConfig {
 
 	@Autowired
@@ -27,7 +27,7 @@ public class MybatisConfig {
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(dataSource);
 		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-		sqlSessionFactory.setConfigLocation(resolver.getResource("mybatis/mybatis-config.xml"));
+		sqlSessionFactory.setConfigLocation(resolver.getResource("classpath:mybatis/mybatis-config.xml"));
 		sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:mybatis/mapper/**/*.xml"));
 		return sqlSessionFactory.getObject();
 	}

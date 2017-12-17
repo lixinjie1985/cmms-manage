@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmos.ha.cmms.manage.example.mapper.ExampleMapper">
+
+	<insert id="insertExample" parameterType="example">
+		insert into tb_example (name,age,birthday)
+		values(#{name},#{age},#{birthday})
+	</insert>
+  	
+  	<select id="selectExamples" resultType="example">
+  		select * from tb_example order by birthday
+  	</select>
+</mapper>

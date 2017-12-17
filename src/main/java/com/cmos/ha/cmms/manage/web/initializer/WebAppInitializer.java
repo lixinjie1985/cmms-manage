@@ -1,6 +1,8 @@
-package com.cmos.ha.cmms.manage.initializer;
+package com.cmos.ha.cmms.manage.web.initializer;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -9,8 +11,8 @@ import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.cmos.ha.cmms.manage.config.RootConfig;
-import com.cmos.ha.cmms.manage.filter.AccessLoggingFilter;
 import com.cmos.ha.cmms.manage.web.config.WebConfig;
+import com.cmos.ha.cmms.manage.web.filter.RequestResponseLoggingFilter;
 
 /**
  * @author lixinjie
@@ -45,8 +47,12 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
 		characterEncodingFilter.setEncoding("UTF-8");
 		characterEncodingFilter.setForceEncoding(true);
-		AccessLoggingFilter accessLoggingFilter = new AccessLoggingFilter();
-		return new Filter[] {characterEncodingFilter, accessLoggingFilter};
+		RequestResponseLoggingFilter requestResponseLoggingFilter = new RequestResponseLoggingFilter();
+		return new Filter[] {characterEncodingFilter, requestResponseLoggingFilter};
 	}
 	
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		registration.setMultipartConfig(new MultipartConfigElement(null, 1024 * 1024 * 10, 1024 * 1024 * 100, 0));
+	}
 }

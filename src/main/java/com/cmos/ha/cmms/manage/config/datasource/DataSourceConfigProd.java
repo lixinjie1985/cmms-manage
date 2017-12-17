@@ -1,10 +1,11 @@
-package com.cmos.ha.cmms.manage.config;
+package com.cmos.ha.cmms.manage.config.datasource;
 
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 
 import com.alibaba.druid.pool.DruidDataSource;
@@ -13,9 +14,10 @@ import com.alibaba.druid.pool.DruidDataSource;
  * @author lixinjie
  * @since 2017-12-15
  */
+@Profile("prod")
 @Configuration
-@PropertySource("classpath:db/db.properties")
-public class DataSourceConfig {
+@PropertySource("classpath:db/prod/db.properties")
+public class DataSourceConfigProd {
 	
 	@Value("${jdbc.driver}")
 	private String driver;
