@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cmos.ha.cmms.common.utils.ResultCode;
 import com.cmos.ha.cmms.manage.example.bean.Example;
 import com.cmos.ha.cmms.manage.example.service.IExampleService;
 import com.cmos.ha.cmms.manage.result.RestResult;
 import com.cmos.ha.cmms.manage.utils.BindingResultUtils;
-import com.cmos.ha.cmms.manage.utils.ErrorCode;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -45,14 +45,14 @@ public class ExampleController {
 	public RestResult saveExample(@Valid @RequestBody Example example, BindingResult bindingResult) {
 		BindingResultUtils.checkBindingResult(bindingResult);
 		exampleService.insertExample(example);
-		return new RestResult(ErrorCode.Success.getCode(), ErrorCode.Success.getDesc());
+		return new RestResult(ResultCode.RestSuccess.getCode(), ResultCode.RestSuccess.getDesc());
 	}
 	
 	@GetMapping("/page/{pageNum:\\d+}/{pageSize:\\d+}")
 	public RestResult listExample(@PathVariable("pageNum")int pageNum, @PathVariable("pageSize")int pageSize) {
 		List<Example> examples = exampleService.selectExamples(pageNum, pageSize);
 		PageInfo<Example> pageInfo = new PageInfo<>(examples);
-		return new RestResult(ErrorCode.Success.getCode(), ErrorCode.Success.getDesc(), pageInfo);
+		return new RestResult(ResultCode.RestSuccess.getCode(), ResultCode.RestSuccess.getDesc(), pageInfo);
 	}
 	
 	@PostMapping("/upload")
@@ -62,7 +62,7 @@ public class ExampleController {
 		map.put("name", file.getName());
 		map.put("size", file.getSize());
 		map.put("contentType", file.getContentType());
-		return new RestResult(ErrorCode.Success.getCode(), ErrorCode.Success.getDesc(), map);
+		return new RestResult(ResultCode.RestSuccess.getCode(), ResultCode.RestSuccess.getDesc(), map);
 	}
 	
 	@GetMapping("/download")
